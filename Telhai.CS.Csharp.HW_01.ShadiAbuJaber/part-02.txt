@@ -1,0 +1,120 @@
+namespace Telhai.CS.Csharp.HW_01.ShadiAbuJaber;
+
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        var library = new MusicLibrary();
+
+        // 1) Songs - create valid songs using different constructors/initializers
+        var song1 = new Song("Imagine", "John Lennon", 1971, 3.1, Genre.Rock); // parameterized ctor
+        var song2 = new Song
+        {
+            Title = "Billie Jean", Artist = "Michael Jackson", Year = 1982, Duration = 4.54, Genre = Genre.Pop
+        }; // object initializer
+        var song3 = new Song("Hey Jude", "The Beatles", 1968, 7.11, Genre.Rock);
+
+        Console.WriteLine("Created valid songs:");
+        Console.WriteLine(song1);
+        Console.WriteLine(song2);
+        Console.WriteLine(song3);
+
+        // 2) Show all Song-related exceptions by attempting invalid creations
+        Console.WriteLine("\nSong exceptions (each should be caught and displayed):");
+
+        try
+        {
+            // Title too short (less than 2)
+            var sBadTitle = new Song { Title = "A", Artist = "Artist", Year = 2000, Duration = 3, Genre = Genre.Other };
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Title exception (expected): " + e.Message);
+        }
+
+        try
+        {
+            // Missing artist (empty)
+            var sBadArtist = new Song { Title = "Good", Artist = "", Year = 2000, Duration = 3, Genre = Genre.Other };
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Artist exception (expected): " + e.Message);
+        }
+
+        try
+        {
+            // Invalid year (too early)
+            var sBadYear = new Song
+                { Title = "Good", Artist = "Artist", Year = 1800, Duration = 3, Genre = Genre.Other };
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Year exception (expected): " + e.Message);
+        }
+
+        try
+        {
+            // Invalid duration (0)
+            var sBadDuration = new Song
+                { Title = "Good", Artist = "Artist", Year = 2000, Duration = 0, Genre = Genre.Other };
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Duration exception (expected): " + e.Message);
+        }
+
+        try
+        {
+            // Invalid genre (not defined in enum)
+            var sBadGenre = new Song
+                { Title = "Good", Artist = "Artist", Year = 2000, Duration = 3, Genre = (Genre)999 };
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Genre exception (expected): " + e.Message);
+        }
+
+        // 3) Playlists - create using different constructors/initializers
+        var p1 = new Playlist("Chill"); // ctor with name
+        p1.AddSong(song1);
+        p1.AddSong(song2);
+        library.AddPlaylist(p1);
+
+        var p2 = new Playlist { Name = "Top Hits" }; // default ctor + initializer
+        p2.AddSong(song3);
+        library.AddPlaylist(p2);
+
+        var p3 = new Playlist("Mixed", new List<Song> { song1, song2, song3 }); // ctor with songs
+        library.AddPlaylist(p3);
+
+        Console.WriteLine("\nPlaylists added to library:");
+        foreach (var p in library.Playlists)
+            p.Print();
+
+        // 4) Playlist exceptions
+        Console.WriteLine("\nPlaylist exceptions (each should be caught and displayed):");
+        try
+        {
+            // Empty name
+            var badP1 = new Playlist { Name = "" };
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Playlist empty-name exception (expected): " + e.Message);
+        }
+
+        try
+        {
+            // Too short name
+            var badP2 = new Playlist("ab");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Playlist too-short-name exception (expected): " + e.Message);
+        }
+    }
+}
