@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Telhai.CS.Csharp.DesignPatterns.Composite
+namespace Telhai.CS.Csharp.DesignPatterns.CompositePattern
 {
     // The Leaf class represents the end objects of a composition. A leaf can't
     // have any children.

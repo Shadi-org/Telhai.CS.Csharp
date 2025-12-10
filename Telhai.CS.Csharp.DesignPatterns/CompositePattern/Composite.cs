@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Telhai.CS.Csharp.DesignPatterns.Composite
+namespace Telhai.CS.Csharp.DesignPatterns.CompositePattern
 {
     // The Composite class represents the complex components that may have
     // children. Usually, the Composite objects delegate the actual work to
